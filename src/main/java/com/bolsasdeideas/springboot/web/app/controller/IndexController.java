@@ -1,6 +1,7 @@
 package com.bolsasdeideas.springboot.web.app.controller;
 
 import com.bolsasdeideas.springboot.web.app.models.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
@@ -17,9 +18,20 @@ import java.util.List;
 @RequestMapping("/app")
 public class IndexController {
 
+    @Value("${text.indexcontroller.index.title:}")
+    private String textIndex;
+
+    @Value("${text.indexcontroller.profile.title:}")
+    private String textProfile;
+
+    @Value("${text.indexcontroller.list.title:}")
+    private String textList;
+
+
+
     @GetMapping(value = {"/index", "/", "", "/home"})
     public String index(Model model){
-        model.addAttribute("title", "Hallo Spring Framework");
+        model.addAttribute("title", textIndex);
         return "index";
     }
 
@@ -31,7 +43,7 @@ public class IndexController {
         user.setEmail("jeff@gmail.com");
 
         model.addAttribute("user", user);
-        model.addAttribute("title", "User Profile ".concat(user.getName()));
+        model.addAttribute("title", textProfile.concat(user.getName()));
 
 
         return "profile";
@@ -39,7 +51,7 @@ public class IndexController {
 
     @GetMapping("/list")
     public String list(Model model){
-        model.addAttribute("title", "Users List ");
+        model.addAttribute(textList, "Users List ");
         return "list";
     }
 
