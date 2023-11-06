@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -38,12 +39,15 @@ public class IndexController {
 
     @GetMapping("/list")
     public String list(Model model){
-;       List<User> users = Arrays.asList(new User("Jeff", "Mills","jf@gmail.com"));
-
-
         model.addAttribute("title", "Users List ");
-        model.addAttribute("users", users);
         return "list";
+    }
+
+    @ModelAttribute("users")
+    public List<User> populateUsers(){
+        List<User> users = Arrays.asList(new User("Jeff", "Mills","jf@gmail.com"),
+                new User("Carl", "Cox","cc@gmail.com"));
+        return users;
     }
 
 }
